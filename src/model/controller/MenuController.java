@@ -1,7 +1,9 @@
 package model.controller;
 
+import java.util.Locale;
 import java.util.Scanner;
 
+import model.entities.Produto;
 import model.services.ProdutoService;
 
 public class MenuController {
@@ -22,7 +24,7 @@ public class MenuController {
 		System.out.println("3. Delete Product");
 		System.out.println("4. List All Products");
 		System.out.println("5. Exit");
-		System.out.println("Select the option you want: ");
+		System.out.print("Select the option you want: ");
 		int option = sc.nextInt();
 		System.out.println("============================");
 		sc.nextLine();
@@ -44,13 +46,21 @@ public class MenuController {
 			System.exit(0);
 			System.out.println("Thank you for using the system.");
 		default:
-			System.out.println("nvalid option please enter a valid integer!");
+			System.out.println("Invalid option please enter a valid integer!");
 		}
 		menu();
 	}
 	
 	public void addProduct() {
-		//Implementar lógica
+		System.out.println("===================");
+		System.out.println("    ADD PRODUCT    ");
+		System.out.println("===================");
+		System.out.print("Name: ");
+		String name = sc.nextLine();
+		System.out.print("Price R$ (Ex:990,00): ");
+		Double price = sc.nextDouble();
+		sc.nextLine();
+		produtoService.create(new Produto(name, price));
 	}
 	
 	public void updateProduct() {
