@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class Carrinho {
 	
-	private Map<Integer, Produto> produtos;
+	private Map<Produto, Integer> cart;
 	
 	public Carrinho() {
-		this.produtos = new HashMap<>();
+		this.cart = new HashMap<>();
 	}
 
-	public Map<Integer, Produto> getProdutos() {
-		return produtos;
+	public Map<Produto, Integer> getProdutos() {
+		return cart;
 	}
 	
 }

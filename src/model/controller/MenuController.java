@@ -26,7 +26,7 @@ public class MenuController {
 		System.out.println("2. Update Product");
 		System.out.println("3. Delete Product");
 		System.out.println("4. List All Products");
-		System.out.println("5. Buy Products     ");
+		System.out.println("5. Acess Cart       ");
 		System.out.println("0. Exit");
 		System.out.print("Select an option: ");
 		int option = sc.nextInt();
@@ -36,7 +36,7 @@ public class MenuController {
 		switch(option){
 		case 1:
 			Utils.timeout();
-			addProduct();
+			createProduct();
 			break;
 		case 2:
 			Utils.timeout();
@@ -52,7 +52,7 @@ public class MenuController {
 			break;
 		case 5:
 			Utils.timeout();
-			buyProducts();
+			menuCart();
 			break;
 		case 0:
 			System.out.println("Closing...");
@@ -65,7 +65,46 @@ public class MenuController {
 		menu();
 	}
 	
-	public void addProduct() {
+	public void menuCart() {
+		System.out.println("Loading...");
+		Utils.timeout();
+		System.out.println("========================");
+		System.out.println(" Cart Management System ");
+		System.out.println("========================");
+		System.out.println("1. Add product to cart");
+		System.out.println("2. Remove product from cart");
+		System.out.println("3. Finalize purchase");
+		System.out.println("4. View products in cart");
+		System.out.println("0. Exit");
+		System.out.print("Select an option: ");
+		int option = sc.nextInt();
+		System.out.println("========================");
+		sc.nextLine();
+		switch(option) {
+			case 1:
+				addProduct();
+				break;
+			case 2:
+				removeProduct();
+				break;
+			case 3:
+				finalizePurchase();
+				break;
+			case 4:
+				viewCart();
+				break;
+			case 0:
+				Utils.timeout();
+				System.out.println("Thank you for using the system.");
+				System.exit(0);
+			default:
+				System.out.println("Invalid option!");
+		}
+		menuCart();
+	}
+	
+	//Methods Product
+	public void createProduct() {
 		System.out.println("===================");
 		System.out.println("    ADD PRODUCT    ");
 		System.out.println("===================");
@@ -126,8 +165,21 @@ public class MenuController {
 		}
 	} 
 	
-	public void buyProducts() {
-		
+	//Methods cart
+	public void addProduct() {
+		//Implementar lógica
+	}
+	
+	public void removeProduct() {
+		//Implementar lógica
+	}
+	
+	public void finalizePurchase() {
+		//Implementar lógica
+	}
+	
+	public void viewCart() {
+		//Implementar lógica
 	}
 	
 }
