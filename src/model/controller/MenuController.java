@@ -1,6 +1,5 @@
 package model.controller;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Produto;
@@ -27,6 +26,7 @@ public class MenuController {
 		System.out.println("2. Update Product");
 		System.out.println("3. Delete Product");
 		System.out.println("4. List All Products");
+		System.out.println("5. Buy Products     ");
 		System.out.println("0. Exit");
 		System.out.print("Select an option: ");
 		int option = sc.nextInt();
@@ -50,13 +50,17 @@ public class MenuController {
 			Utils.timeout();
 			showProducts();
 			break;
+		case 5:
+			Utils.timeout();
+			buyProducts();
+			break;
 		case 0:
 			System.out.println("Closing...");
 			Utils.timeout();
 			System.out.println("Thank you for using the system.");
 			System.exit(0);
 		default:
-			System.out.println("Invalid option please enter a valid integer!");
+			System.out.println("Invalid option!");
 		}
 		menu();
 	}
@@ -121,5 +125,9 @@ public class MenuController {
 			System.out.println(e.getMessage());
 		}
 	} 
+	
+	public void buyProducts() {
+		
+	}
 	
 }

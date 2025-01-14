@@ -1,6 +1,5 @@
 package model.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.Produto;
@@ -16,19 +15,15 @@ public class ProdutoService implements ProdutoRepository{
 	
 	@Override
 	public void create(Produto produto) {
-		try {
-			if(produto.getName().isEmpty()) {
-				throw new IllegalArgumentException("Error: Product name cannot be null.");
-			}
-			if(produto.getPrice() <= 0) {
-				throw new IllegalArgumentException("Error: Product value less than or equal 0.");
-			}
-			
-			produtoRepository.create(produto);
-			System.out.println("product registered in stock.");
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+		if(produto.getName().isEmpty()) {
+			throw new IllegalArgumentException("Error: Product name cannot be null.");
 		}
+		if(produto.getPrice() <= 0) {
+			throw new IllegalArgumentException("Error: Product value less than or equal 0.");
+		}
+		
+		produtoRepository.create(produto);
+		System.out.println("product registered in stock.");
 	}
 	
 	@Override
