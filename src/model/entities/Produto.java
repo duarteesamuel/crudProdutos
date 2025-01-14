@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.util.Objects;
+
 public class Produto {
 	
 	private static Integer counterId = 1;

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import model.entities.Produto;
 import model.services.ProdutoService;
+import utils.Utils;
 
 public class MenuController {
 	
@@ -17,6 +18,9 @@ public class MenuController {
 	}
 	
 	public void menu() {
+		System.out.println("Loading...");
+		Utils.timeout();
+		System.out.println("=======================");
 		System.out.println("Stock Management System");
 		System.out.println("=======================");
 		System.out.println("1. Add Product");
@@ -31,18 +35,24 @@ public class MenuController {
 		
 		switch(option){
 		case 1:
+			Utils.timeout();
 			addProduct();
 			break;
 		case 2:
+			Utils.timeout();
 			updateProduct();
 			break;
 		case 3:
+			Utils.timeout();
 			deleteProduct();
 			break;
 		case 4:
+			Utils.timeout();
 			showProducts();
 			break;
 		case 0:
+			System.out.println("Closing...");
+			Utils.timeout();
 			System.out.println("Thank you for using the system.");
 			System.exit(0);
 		default:
@@ -60,7 +70,8 @@ public class MenuController {
 		System.out.print("Price R$ (Ex:990,00): ");
 		Double price = sc.nextDouble();
 		sc.nextLine();
-		produtoService.create(new Produto(name, price));
+		Produto produto = new Produto(name, price);
+		produtoService.create(produto);
 	}
 	
 	public void updateProduct() {

@@ -37,9 +37,10 @@ public class ProdutoService implements ProdutoRepository{
 			Produto produto = produtoRepository.findById(id);
 			if(produto == null) {
 				throw new IllegalArgumentException("Error: Product not found!");
+			} else {
+				produtoRepository.update(id, updateProduto);
+				System.out.println("Product updated successfully!");
 			}
-			produtoRepository.update(id, updateProduto);
-			System.out.println("Product updated successfully!");
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -51,9 +52,10 @@ public class ProdutoService implements ProdutoRepository{
 			Produto produto = produtoRepository.findById(id);
 			if(produto == null) {
 				throw new IllegalArgumentException("Error: Product not found!");
+			} else {
+				produtoRepository.delete(id);
+				System.out.println("Product removed successfully!");
 			}
-			produtoRepository.delete(id);
-			System.out.println("Product removed successfully!");
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
