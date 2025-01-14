@@ -23,7 +23,7 @@ public class MenuController {
 		System.out.println("2. Update Product");
 		System.out.println("3. Delete Product");
 		System.out.println("4. List All Products");
-		System.out.println("5. Exit");
+		System.out.println("0. Exit");
 		System.out.print("Select the option you want: ");
 		int option = sc.nextInt();
 		System.out.println("============================");
@@ -42,9 +42,9 @@ public class MenuController {
 		case 4:
 			showProducts();
 			break;
-		case 5:
-			System.exit(0);
+		case 0:
 			System.out.println("Thank you for using the system.");
+			System.exit(0);
 		default:
 			System.out.println("Invalid option please enter a valid integer!");
 		}
@@ -64,15 +64,52 @@ public class MenuController {
 	}
 	
 	public void updateProduct() {
-		//Implementar lógica
+		System.out.println("==================");
+		System.out.println("    UPDATE DATA   ");
+		System.out.println("==================");
+		System.out.print("Enter the ID of the product you want to update: ");
+		int id = sc.nextInt();
+		sc.nextLine();
+		Produto produto = produtoService.findById(id);
+		if(produto == null) {
+			throw new IllegalArgumentException("Error: Product not Found!");
+		} else {
+			System.out.print("New name: ");
+			String newName = sc.nextLine();
+			System.out.print("New price R$(Ex: 990,00): ");
+			double newPrice = sc.nextDouble();
+			sc.nextLine();
+			Produto produtoAtualizado = new Produto(newName, newPrice);
+			produtoService.update(id, produtoAtualizado);
+		}
+		
 	}
 	
 	public void deleteProduct() {
-		//Implementar lógica
+		System.out.println("====================");
+		System.out.println("   DELETE PRODUCT   ");
+		System.out.println("====================");
+		System.out.print("Enter the ID of the product you want to update:");
+		int id = sc.nextInt();
+		try {
+			Produto produto = produtoService.findById(id);
+			if(produto != null) {
+				produtoService.delete(id);
+			} else {
+				throw new IllegalArgumentException("Error: Product not found!");
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void showProducts() {
-		//Implementar lógica
-	}
+		System.out.println("======================");
+		System.out.println("   LISTING PRODUCTS   ");
+		System.out.println("======================");
+		for (Produto p : produtoService.listAll()) {
+			System.out.println(p);
+		}
+	} 
 	
 }

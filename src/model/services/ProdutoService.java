@@ -16,43 +16,64 @@ public class ProdutoService implements ProdutoRepository{
 	
 	@Override
 	public void create(Produto produto) {
-		if(produto.getName().isEmpty()) {
-			throw new IllegalArgumentException("Error: Product name cannot be null.");
+		try {
+			if(produto.getName().isEmpty()) {
+				throw new IllegalArgumentException("Error: Product name cannot be null.");
+			}
+			if(produto.getPrice() <= 0) {
+				throw new IllegalArgumentException("Error: Product value less than or equal 0.");
+			}
+			
+			produtoRepository.create(produto);
+			System.out.println("product registered in stock.");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		if(produto.getPrice() <= 0) {
-			throw new IllegalArgumentException("Error: Product value less than or equal 0.");
-		}
-		
-		produtoRepository.create(produto);
-		System.out.println("product registered in stock.");
 	}
 	
 	@Override
 	public void update(int id, Produto updateProduto) {
-		Produto produto = produtoRepository.findById(id);
-		if(produto == null) {
-			throw new IllegalArgumentException("Error: Product not found!");
+		try {
+			Produto produto = produtoRepository.findById(id);
+			if(produto == null) {
+				throw new IllegalArgumentException("Error: Product not found!");
+			}
+			produtoRepository.update(id, updateProduto);
+			System.out.println("Product updated successfully!");
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-		produtoRepository.update(id, updateProduto);
-		System.out.println("Product updated successfully!");
 	}
 	
 	@Override
 	public void delete(int id) {
-		Produto produto = produtoRepository.findById(id);
-		if(produto == null) {
-			throw new IllegalArgumentException("Error: Product not found!");
+		try {
+			Produto produto = produtoRepository.findById(id);
+			if(produto == null) {
+				throw new IllegalArgumentException("Error: Product not found!");
+			}
+			produtoRepository.delete(id);
+			System.out.println("Product removed successfully!");
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-		produtoRepository.delete(id);
-		System.out.println("Product removed successfully!");
 	}
 	
 	
 	@Override
 	public List<Produto> listAll(){
 		List<Produto> produtos = produtoRepository.listAll();
-		if(produtos.isEmpty()) {
-			throw new NullPointerException("Stock is empty!");
+		
+		try {
+			if(produtos.isEmpty()) {
+				throw new IllegalArgumentException("Stock is empty!");
+			} else {
+				for(Produto p : produtos) {
+					System.out.println(p);
+				}
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return produtos;
 	}
@@ -60,8 +81,12 @@ public class ProdutoService implements ProdutoRepository{
 	@Override
 	public Produto findById(int id) {
 		Produto produto = produtoRepository.findById(id);
-		if(produto == null) {
-			throw new NullPointerException("Error: Product not found!");
+		try {
+			if(produto == null) {
+				throw new IllegalArgumentException("Error: Product not found!");
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return produto;
 	}

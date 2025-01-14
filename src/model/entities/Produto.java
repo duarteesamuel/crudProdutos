@@ -43,7 +43,8 @@ public class Produto {
 	
 	@Override
 	public String toString() {
-		return String.format("|ID Produto: %d \n%s - Preço: R$ %.2f|\n", getName(), getPrice());
+		return String.format("|ID Product: %d \n|Product Name: %s \n|Price: R$ %.2f\n",
+				getId(), getName(), getPrice());
 	}
 	
 }
