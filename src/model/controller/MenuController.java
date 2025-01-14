@@ -28,7 +28,7 @@ public class MenuController {
 		System.out.println("3. Delete Product");
 		System.out.println("4. List All Products");
 		System.out.println("0. Exit");
-		System.out.print("Select the option you want: ");
+		System.out.print("Select an option: ");
 		int option = sc.nextInt();
 		System.out.println("============================");
 		sc.nextLine();
@@ -81,17 +81,19 @@ public class MenuController {
 		System.out.print("Enter the ID of the product you want to update: ");
 		int id = sc.nextInt();
 		sc.nextLine();
-		Produto produto = produtoService.findById(id);
-		if(produto == null) {
-			throw new IllegalArgumentException("Error: Product not Found!");
-		} else {
+		
+		try {
 			System.out.print("New name: ");
 			String newName = sc.nextLine();
-			System.out.print("New price R$(Ex: 990,00): ");
+			System.out.print("New price R$ (Ex: 990,00): ");
 			double newPrice = sc.nextDouble();
 			sc.nextLine();
-			Produto produtoAtualizado = new Produto(newName, newPrice);
-			produtoService.update(id, produtoAtualizado);
+			Produto existingProduct = new Produto(newName, newPrice);
+			produtoService.update(id, existingProduct);
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			System.out.println("An unexpected error occurred: " + e.getMessage());
 		}
 		
 	}
@@ -100,16 +102,11 @@ public class MenuController {
 		System.out.println("====================");
 		System.out.println("   DELETE PRODUCT   ");
 		System.out.println("====================");
-		System.out.print("Enter the ID of the product you want to update:");
+		System.out.print("Enter the ID of the product you want to update: ");
 		int id = sc.nextInt();
 		try {
-			Produto produto = produtoService.findById(id);
-			if(produto != null) {
-				produtoService.delete(id);
-			} else {
-				throw new IllegalArgumentException("Error: Product not found!");
-			}
-		} catch(Exception e) {
+			produtoService.delete(id);
+		} catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -118,8 +115,10 @@ public class MenuController {
 		System.out.println("======================");
 		System.out.println("   LISTING PRODUCTS   ");
 		System.out.println("======================");
-		for (Produto p : produtoService.listAll()) {
-			System.out.println(p);
+		try {
+			produtoService.listAll();
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 	} 
 	
