@@ -1,8 +1,8 @@
 package model.services;
 
 import java.util.HashMap;
+
 import java.util.Map;
-import java.util.Map.Entry;
 
 import model.entities.Produto;
 import model.repositories.CarrinhoRepository;

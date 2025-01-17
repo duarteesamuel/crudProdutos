@@ -5,7 +5,7 @@ import java.util.List;
 import model.entities.Produto;
 import model.repositories.ProdutoRepository;
 
-public class ProdutoService implements ProdutoRepository{
+public class ProdutoService{
 	
 	private ProdutoRepository produtoRepository;
 	
@@ -13,7 +13,6 @@ public class ProdutoService implements ProdutoRepository{
 		this.produtoRepository = produtoRepository;
 	}
 	
-	@Override
 	public void create(Produto produto) {
 		if(produto.getName().isEmpty()) {
 			throw new IllegalArgumentException("Error: Product name cannot be null.");
@@ -26,7 +25,6 @@ public class ProdutoService implements ProdutoRepository{
 		System.out.println("product registered in stock.");
 	}
 	
-	@Override
 	public void update(int id, Produto updatedProduct) {
 		Produto existingProduct = findById(id);
 		if(existingProduct == null) {
@@ -39,7 +37,6 @@ public class ProdutoService implements ProdutoRepository{
 		System.out.println("Product updated successfully!");
 	}
 	
-	@Override
 	public void delete(int id) {
 		Produto existingProduct = findById(id);
 		if(existingProduct == null) {
@@ -50,7 +47,6 @@ public class ProdutoService implements ProdutoRepository{
 	}
 	
 	
-	@Override
 	public List<Produto> listAll(){
 		List<Produto> produtos = produtoRepository.listAll();
 		
@@ -65,7 +61,6 @@ public class ProdutoService implements ProdutoRepository{
 		return produtos;
 	}
 	
-	@Override
 	public Produto findById(int id) {
 		Produto produto = produtoRepository.findById(id);
 		if(produto == null) {
