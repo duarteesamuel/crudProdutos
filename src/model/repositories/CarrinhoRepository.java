@@ -10,6 +10,6 @@ public interface CarrinhoRepository {
 	void buyProduct(int id);
 	void removeProduct(int id);
 	void finalizePurchase();
-	Map<Produto, Integer> viewCart();
+	Map<Produto, Integer> getCartContents();
 	
 }

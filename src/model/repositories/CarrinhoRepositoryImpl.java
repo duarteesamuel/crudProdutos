@@ -20,7 +20,7 @@ public class CarrinhoRepositoryImpl implements CarrinhoRepository{
 		if(produto != null) {
 			if(cart.containsKey(produto)) {
 				int quantity = cart.get(produto);
-				cart.put(produto, quantity);
+				cart.put(produto, quantity + 1);
 			} else {
 				cart.put(produto, 1);
 			}
@@ -38,23 +38,15 @@ public class CarrinhoRepositoryImpl implements CarrinhoRepository{
 	}
 
 	@Override
-	public Map<Produto, Integer> viewCart() {
-		if(cart.isEmpty()) {
-			throw new IllegalArgumentException("Cart is empty.");
-		}
+	public void finalizePurchase() {
+		cart.clear();
 		
-		for(Map.Entry<Produto, Integer> entry : cart.entrySet()) {
-			Produto produto = entry.getKey();
-			Integer quantity = entry.getValue();
-			System.out.printf("|%s - x%d%n", produto.getName(), quantity);
-		}
+	}
+	
+	@Override
+	public Map<Produto, Integer> getCartContents() {
 		return cart;
 	}
 
-	@Override
-	public void finalizePurchase() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }
