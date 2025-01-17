@@ -6,6 +6,7 @@ import java.util.Map;
 
 import model.entities.Produto;
 import model.repositories.CarrinhoRepository;
+import utils.Utils;
 
 public class CarrinhoService{
 	
@@ -22,17 +23,25 @@ public class CarrinhoService{
 		}
 		
 		carrinhoRepository.buyProduct(id);
-		System.out.println("Product added successfully!");
+		System.out.println("Product has been added to cart");
 	}
 	
 	
 	public void removeProduct(int id) {
-		//Implementar lógica
+		if(id <= 0) {
+			throw new IllegalArgumentException("ID invalid!");
+		}
+		
+		carrinhoRepository.removeProduct(id);
+		System.out.println("Purchase finalized and cart cleared");
 	}
 	
 	
 	public void finalizePurchase() {
-		//Implentar lógica
+		System.out.println("Finalizing purchase...");
+		Utils.timeout();
+		carrinhoRepository.finalizePurchase();
+		System.out.println("Purchase finalized in service layer.");
 	}
 	
 	

@@ -32,15 +32,20 @@ public class CarrinhoRepositoryImpl implements CarrinhoRepository{
 	@Override
 	public void removeProduct(int id) {
 		Produto produto = produtoRepository.findById(id);
-		if(produto != null) {
+		if(produto != null && cart.containsKey(produto)) {
 			cart.remove(produto);
+		} else {
+			throw new IllegalArgumentException("Product with ID " + id + " not found!");
 		}
 	}
 
 	@Override
 	public void finalizePurchase() {
-		cart.clear();
+		if(cart.isEmpty()) {
+			throw new IllegalArgumentException("Cart is empty. Cannot finalize purchase.");
+		}
 		
+		cart.clear();
 	}
 	
 	@Override

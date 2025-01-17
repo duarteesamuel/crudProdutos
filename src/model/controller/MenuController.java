@@ -21,7 +21,6 @@ public class MenuController {
 	}
 	
 	public void menu() {
-		System.out.println("Loading...");
 		Utils.timeout();
 		System.out.println("=======================");
 		System.out.println("Stock Management System");
@@ -70,7 +69,6 @@ public class MenuController {
 	}
 	
 	public void menuCart() {
-		System.out.println("Loading...");
 		Utils.timeout();
 		System.out.println("========================");
 		System.out.println(" Cart Management System ");
@@ -78,6 +76,7 @@ public class MenuController {
 		System.out.println("1. Buy Product");
 		System.out.println("2. Remove Product from Cart");
 		System.out.println("3. View Products in Cart");
+		System.out.println("4. Finalize Purchase");
 		System.out.println("0. Return to main menu");
 		System.out.print("Select an option: ");
 		int option = sc.nextInt();
@@ -85,13 +84,19 @@ public class MenuController {
 		sc.nextLine();
 		switch(option) {
 			case 1:
+				Utils.timeout();
 				buyProduct();
 				break;
 			case 2:
+				Utils.timeout();
 				removeProduct();
 				break;
 			case 3:
+				Utils.timeout();
 				viewCart();
+				break;
+			case 4:
+				finalizePurchase();
 				break;
 			case 0:
 				menu();
@@ -166,7 +171,6 @@ public class MenuController {
 	
 	//Methods cart
 	public void buyProduct() {
-		//Corrigir bug: Exception in thread "main" java.lang.NullPointerException: Cannot invoke "model.repositories.ProdutoRepositoryImpl.findById(int)" because "this.produtoRepositoryImpl" is null
 		System.out.println("=============== Available products ===============");
 		try {
 			produtoService.listAll();
@@ -178,12 +182,28 @@ public class MenuController {
 			System.out.println(e.getMessage());
 		}
 	}
+	
 	public void removeProduct() {
-		//Implementar lógica
+		System.out.println("============== Remove Product ===============");
+		try {
+			carrinhoService.viewCart();
+			System.out.print("Enter the ID of the product you want to remove from the cart: ");
+			int id = sc.nextInt();
+			sc.nextLine();
+			carrinhoService.removeProduct(id);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+			
 	}
 	
 	public void finalizePurchase() {
-		//Implementar lógica
+		System.out.println("=============== FINALIZE PURCHASE ===============");
+		try {
+			carrinhoService.finalizePurchase();
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void viewCart() {
