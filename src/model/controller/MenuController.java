@@ -3,16 +3,20 @@ package model.controller;
 import java.util.Scanner;
 
 import model.entities.Produto;
+import model.repositories.CarrinhoRepository;
+import model.services.CarrinhoService;
 import model.services.ProdutoService;
 import utils.Utils;
 
 public class MenuController {
 	
 	private ProdutoService produtoService;
+	private CarrinhoService carrinhoService;
 	private Scanner sc;
 	
-	public MenuController(ProdutoService produtoService, Scanner sc) {
+	public MenuController(ProdutoService produtoService, CarrinhoService carrinhoService, Scanner sc) {
 		this.produtoService = produtoService;
+		this.carrinhoService = carrinhoService;
 		this.sc = sc;
 	}
 	
@@ -71,32 +75,27 @@ public class MenuController {
 		System.out.println("========================");
 		System.out.println(" Cart Management System ");
 		System.out.println("========================");
-		System.out.println("1. Add product to cart");
-		System.out.println("2. Remove product from cart");
-		System.out.println("3. Finalize purchase");
-		System.out.println("4. View products in cart");
-		System.out.println("0. Exit");
+		System.out.println("1. Buy Product");
+		System.out.println("2. Remove Product from Cart");
+		System.out.println("3. View Products in Cart");
+		System.out.println("0. Return to main menu");
 		System.out.print("Select an option: ");
 		int option = sc.nextInt();
 		System.out.println("========================");
 		sc.nextLine();
 		switch(option) {
 			case 1:
-				addProduct();
+				buyProduct();
 				break;
 			case 2:
 				removeProduct();
 				break;
 			case 3:
-				finalizePurchase();
-				break;
-			case 4:
 				viewCart();
 				break;
 			case 0:
-				Utils.timeout();
-				System.out.println("Thank you for using the system.");
-				System.exit(0);
+				menu();
+				break;
 			default:
 				System.out.println("Invalid option!");
 		}
@@ -145,7 +144,7 @@ public class MenuController {
 		System.out.println("====================");
 		System.out.println("   DELETE PRODUCT   ");
 		System.out.println("====================");
-		System.out.print("Enter the ID of the product you want to update: ");
+		System.out.print("Enter the ID of the product you want to delete: ");
 		int id = sc.nextInt();
 		try {
 			produtoService.delete(id);
@@ -166,10 +165,19 @@ public class MenuController {
 	} 
 	
 	//Methods cart
-	public void addProduct() {
-		//Implementar lógica
+	public void buyProduct() {
+		//Corrigir bug: Exception in thread "main" java.lang.NullPointerException: Cannot invoke "model.repositories.ProdutoRepositoryImpl.findById(int)" because "this.produtoRepositoryImpl" is null
+		System.out.println("=============== Available products ===============");
+		try {
+			produtoService.listAll();
+			System.out.print("Enter the ID of the product you want to add to the cart: ");
+			int id = sc.nextInt();
+			sc.nextLine();
+			carrinhoService.buyProduct(id);
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
-	
 	public void removeProduct() {
 		//Implementar lógica
 	}
@@ -179,7 +187,12 @@ public class MenuController {
 	}
 	
 	public void viewCart() {
-		//Implementar lógica
+		System.out.println("============== PRODUCTS IN CART ==============");
+		try {
+			carrinhoService.viewCart();
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 }

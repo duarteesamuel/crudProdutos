@@ -1,10 +1,10 @@
 package model.services;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import model.entities.Produto;
 import model.repositories.CarrinhoRepository;
-import model.repositories.ProdutoRepository;
 
 public class CarrinhoService implements CarrinhoRepository{
 	
@@ -15,9 +15,13 @@ public class CarrinhoService implements CarrinhoRepository{
 	}
 	
 	@Override
-	public void addProduct(Produto produto, Integer quantity) {
-		carrinhoRepository.addProduct(produto, quantity);
-		System.out.println("Product added to cart successfully.");
+	public void buyProduct(int id) {
+		if(id <= 0) {
+			throw new IllegalArgumentException("Invalid id");
+		}
+		
+		carrinhoRepository.addProduct(id);
+		System.out.println("Product added successfully!");
 	}
 	
 	@Override
@@ -27,23 +31,11 @@ public class CarrinhoService implements CarrinhoRepository{
 	
 	@Override
 	public void finalizePurchase() {
-		
+		//Implentar lógica
 	}
 	
 	@Override
 	public Map<Produto, Integer> viewCart() {
-		Map<Produto, Integer> cart = carrinhoRepository.viewCart();
-		
-		if(cart.isEmpty()) {
-			throw new IllegalArgumentException("The cart is empty.");
-		} else {
-			System.out.println("Items in cart:");
-			for(Map.Entry<Produto, Integer> entry : cart.entrySet()) {
-				Produto product = entry.getKey();
-				Integer quantity = entry.getValue();
-				System.out.printf("|Product: %s - Quantity: %dx ", product.getName(), quantity);
-			}
-		}
-		return cart;
+		return carrinhoRepository.viewCart();
 	}
 }
